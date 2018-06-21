@@ -24,7 +24,7 @@ namespace RockPaperScissors
         {
             Console.WriteLine(playerOne.name + ", please enter your move.\r\n (Rock, Paper, Scissors, Lizard, Spock)");
             playerOne.gesture = Console.ReadLine();
-            playerOne.GestureCheck(playerOne.gesture);
+            playerOne.GestureCheck();
             Console.Clear();
             Console.WriteLine(playerTwo.name + ", please enter your move.\r\n (Rock, Paper, Scissors, Lizard, Spock)");
             playerTwo.gesture = Console.ReadLine();

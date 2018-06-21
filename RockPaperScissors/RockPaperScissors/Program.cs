@@ -10,8 +10,8 @@ namespace RockPaperScissors
     {
         static void Main()
             {
-            //OnePlayerGame game = new OnePlayerGame();
-            //game.StartOnePlayerGame();
+            Game game = new Game();
+            game.MainGame();
             }
 
     }

@@ -16,11 +16,6 @@ namespace RockPaperScissors
 
         }
 
-        public void IncreaseScore()
-        {
-            score += 1;
-        }
-
         public int ComputerGesturePicker()
         {
             Random rng = new Random();
@@ -28,19 +23,24 @@ namespace RockPaperScissors
             return gestureChoice;
         }
 
-        public override string GestureCheck(string userInput)
+        public override string GestureCheck()
         {
             switch (ComputerGesturePicker())
             {
                 case 0:
+                    gesture = gestures[0];
                     return "rock";
                 case 1:
+                    gesture = gestures[1];
                     return "paper";
                 case 2:
+                    gesture = gestures[2];
                     return "scissors";
                 case 3:
+                    gesture = gestures[3];
                     return "lizard";
                 case 4:
+                    gesture = gestures[4];
                     return "spock";
                 default:
                     return "Invalid Gesture";
