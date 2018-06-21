@@ -6,19 +6,23 @@ using System.Threading.Tasks;
 
 namespace RockPaperScissors
 {
-    class Gestures
+    public abstract class Player
     {
+        public string name;
+        public int score;
+        public string gesture;
         public List<string> gestures = new List<string>
-            {
-                "rock",
-                "paper",
-                "scissors",
-                "lizard",
-                "spock"
-            };
-        public string GestureCheck(string userInput)
         {
-            switch(userInput.ToLower().Trim())
+            "rock",
+            "paper",
+            "scissors",
+            "lizard",
+            "spock"
+        };
+
+        public virtual string GestureCheck(string userInput)
+        {
+            switch (userInput.ToLower().Trim())
             {
                 case "rock":
                     return gestures[0];
@@ -35,31 +39,5 @@ namespace RockPaperScissors
 
             }
         }
-        //public string Rock(string userInput)
-        //{
-
-
-        //}
-
-        //public string Paper(string userInput)
-        //{
-
-        //}
-
-        //public string Scissors(string userInput)
-        //{
-
-        //}
-
-        //public string Lizard(string userInput)
-        //{
-
-        //}
-
-        //public string Spock(string userInput)
-        //{
-
-        //}
-
     }
 }

@@ -8,183 +8,175 @@ namespace RockPaperScissors
 {
     class Game
     {
-        public class OnePlayerGame
+        Player playerOne;
+        Player playerTwo;
+
+        public string computerGesture;
+        public string playerMove;
+        public string validGesture;
+        public string playerOutcome;
+
+
+        public void StartOnePlayerGame()
         {
-            Players.ComputerPlayer computerPlayer = new Players.ComputerPlayer();
-            Gestures gestures = new Gestures();
-            Players.HumanPlayer playerOne = new Players.HumanPlayer();
-
-            public string computerGesture;
-            public string playerMove;
-            public string validGesture;
-            public string playerOutcome;
-
-            public void StartGame()
+            playerOne = new HumanPlayer();
+            playerTwo = new ComputerPlayer();
+            Console.WriteLine("Please Enter Your name: ");
+            playerOne.name = Console.ReadLine();
+            Console.WriteLine("Your opponite will be: " + playerTwo.name);
+            RunOnePlayerGame();
+            bool playAgain = PlayAgain();
+            if (playAgain)
             {
-                Console.WriteLine("Please Enter Your name: ");
-                playerOne.playerName = Console.ReadLine();
-                Console.WriteLine("Your opponite will be: " + computerPlayer.computerName);
-                RunGame();
-                bool playAgain = PlayAgain();
-                if(playAgain)
-                {
-                    computerPlayer.computerScore = 0;
-                    playerOne.playerScore = 0;
-                    RunGame();
-                    
-                }
-                else
-                {
-                    computerPlayer.computerScore = 0;
-                    playerOne.playerScore = 0;
-                    StartGame();
-                }
-                Console.ReadLine();
+                playerTwo.score = 0;
+                playerOne.score = 0;
+                RunOnePlayerGame();
 
             }
-
-            public void RunGame()
+            else
             {
-                do
-                {
-                    Console.WriteLine("\r\n" + playerOne.playerName + " score is: " + playerOne.playerScore + " and " + computerPlayer.computerName + " score is: " + computerPlayer.computerScore);
-                    Console.WriteLine("Please enter your move: \r\n (Rock, Paper, Scissors, Lizard, Spock)");
-                    playerMove = Console.ReadLine();
-                    validGesture = gestures.GestureCheck(playerMove);
-                    computerGesture = computerPlayer.ComputerGesture();
-                    playerOutcome = GameLogic(validGesture, computerGesture);
-                    Scoreing(playerOutcome);
-                }
-                while (playerOne.playerScore < 2 && computerPlayer.computerScore < 2);
-                if (playerOne.playerScore == 2)
-                {
-                    Console.WriteLine("\r\n" + playerOne.playerName + " is the winner!\r\n" + "Scores: \r\n" + playerOne.playerName + ": " + playerOne.playerScore + "\r\n" + computerPlayer.computerName + ": " + computerPlayer.computerScore);
-                }
-                else
-                {
-                    Console.WriteLine("\r\n" + computerPlayer.computerName + " is the winner!\r\n" + "Scores: \r\n" + playerOne.playerName + ": " + playerOne.playerScore + "\r\n" + computerPlayer.computerName + ": " + computerPlayer.computerScore);
-                }
+                playerTwo.score = 0;
+                playerOne.score = 0;
+                StartOnePlayerGame();
             }
+            Console.ReadLine();
 
-            public bool PlayAgain()
+        }
+        public void RunOnePlayerGame()
+        {
+            do
             {
-                Console.WriteLine("\r\nPlay Again?"+"\r\n"+"Enter: Yes, No");
-                string playAgain = Console.ReadLine().ToLower().Trim();
-                switch(playAgain)
-                {
-                    case "yes":
-                        return true;
-                    case "no":
-                        return false;
-                    default:
-                        return false;
-                }
-
+                Console.WriteLine("\r\n" + playerOne.name + " score is: " + playerOne.score + " and " + computerPlayer.name + " score is: " + computerPlayer.score);
+                Console.WriteLine("Please enter your move: \r\n (Rock, Paper, Scissors, Lizard, Spock)");
+                playerMove = Console.ReadLine();
+                validGesture = playerOne.GestureCheck(playerMove);
+                computerGesture = playerTwo.ComputerGesture();
+                playerOutcome = GameLogic(validGesture, computerGesture);
+                Scoreing(playerOutcome);
             }
-
-            public void Scoreing(string outcome)
+            while (playerOne.score < 2 && playerTwo.score < 2);
+            if (playerOne.score == 2)
             {
-                switch (outcome)
-                {
-                    case "tie":
-                        Console.WriteLine("\r\n" + "This resulted in a tie, computer chose: " + computerGesture);
-                        break;
-                    case "win":
-                        Console.WriteLine("\r\n" + "This round resulted in " + playerOne.playerName + " Winning. Computer chose: " + computerGesture);
-                        playerOne.IncreaseScore();
-                        break;
-                    case "lose":
-                        Console.WriteLine("\r\n" + "This round resulted in " + computerPlayer.computerName + " Winning. Computer chose: " + computerGesture);
-                        computerPlayer.IncreaseScore();
-                        break;
-                    default:
-                        Console.WriteLine("\r\n"+"What is the matter with you? Pick a valid choice \r\n");
-                        break;
-                }
+                Console.WriteLine("\r\n" + playerOne.name + " is the winner!\r\n" + "Scores: \r\n" + playerOne.name + ": " + playerOne.score + "\r\n" + computerPlayer.name + ": " + computerPlayer.score);
             }
-
-            public string GameLogic(string playerOneMove, string computerMove)
+            else
             {
-                switch (playerOneMove)
-                {
-                    case "rock":
-                        if(computerMove == gestures.gestures[0])
-                        {
-                            return "tie";
-                        }
-                        else if(computerMove == gestures.gestures[1] || computerMove == gestures.gestures[4])
-                        {
-                            return "lose";
-                        }
-                        else
-                        {
-                            return "win";
-                        }
-                    case "paper":
-                        if (computerMove == gestures.gestures[1])
-                        {
-                            return "tie";
-                        }
-                        else if (computerMove == gestures.gestures[2] || computerMove == gestures.gestures[3])
-                        {
-                            return "lose";
-                        }
-                        else
-                        {
-                            return "win";
-                        }
-                    case "scissors":
-                        if (computerMove == gestures.gestures[2])
-                        {
-                            return "tie";
-                        }
-                        else if (computerMove == gestures.gestures[0] || computerMove == gestures.gestures[4])
-                        {
-                            return "lose";
-                        }
-                        else
-                        {
-                            return "win";
-                        }
-                    case "lizard":
-                        if (computerMove == gestures.gestures[3])
-                        {
-                            return "tie";
-                        }
-                        else if (computerMove == gestures.gestures[2] || computerMove == gestures.gestures[1])
-                        {
-                            return "lose";
-                        }
-                        else
-                        {
-                            return "win";
-                        }
-                    case "spock":
-                        if (computerMove == gestures.gestures[4])
-                        {
-                            return "tie";
-                        }
-                        else if (computerMove == gestures.gestures[1] || computerMove == gestures.gestures[3])
-                        {
-                            return "lose";
-                        }
-                        else
-                        {
-                            return "win";
-                        }
-                    default:
-                        return "null";
-                }
+                Console.WriteLine("\r\n" + computerPlayer.name + " is the winner!\r\n" + "Scores: \r\n" + playerOne.name + ": " + playerOne.score + "\r\n" + computerPlayer.name + ": " + computerPlayer.score);
+            }
+        }
+
+        public bool PlayAgain()
+        {
+            Console.WriteLine("\r\nPlay Again?" + "\r\n" + "Enter: Yes, No");
+            string playAgain = Console.ReadLine().ToLower().Trim();
+            switch (playAgain)
+            {
+                case "yes":
+                    return true;
+                case "no":
+                    return false;
+                default:
+                    return false;
             }
 
         }
 
-        public class TwoPlayerGame
+        public void Scoreing(string outcome)
         {
-            Gestures gestures = new Gestures();
-            Players.HumanPlayer playerOne = new Players.HumanPlayer();
-            Players.HumanPlayer playerTwo = new Players.HumanPlayer();
+            switch (outcome)
+            {
+                case "tie":
+                    Console.WriteLine("\r\n" + "This resulted in a tie, computer chose: " + computerGesture);
+                    break;
+                case "win":
+                    Console.WriteLine("\r\n" + "This round resulted in " + playerOne.name + " Winning. Computer chose: " + computerGesture);
+                    playerOne.IncreaseScore();
+                    break;
+                case "lose":
+                    Console.WriteLine("\r\n" + "This round resulted in " + computerPlayer.name + " Winning. Computer chose: " + computerGesture);
+                    computerPlayer.IncreaseScore();
+                    break;
+                default:
+                    Console.WriteLine("\r\n" + "What is the matter with you? Pick a valid choice \r\n");
+                    break;
+            }
+        }
+
+        public string GameLogic(string playerOneMove, string computerMove)
+        {
+            switch (playerOneMove)
+            {
+                case "rock":
+                    if (computerMove == computerPlayer.gestures[0])
+                    {
+                        return "tie";
+                    }
+                    else if (computerMove == computerPlayer.gestures[1] || computerMove == computerPlayer.gestures[4])
+                    {
+                        return "lose";
+                    }
+                    else
+                    {
+                        return "win";
+                    }
+                case "paper":
+                    if (computerMove == computerPlayer.gestures[1])
+                    {
+                        return "tie";
+                    }
+                    else if (computerMove == computerPlayer.gestures[2] || computerMove == computerPlayer.gestures[3])
+                    {
+                        return "lose";
+                    }
+                    else
+                    {
+                        return "win";
+                    }
+                case "scissors":
+                    if (computerMove == computerPlayer.gestures[2])
+                    {
+                        return "tie";
+                    }
+                    else if (computerMove == computerPlayer.gestures[0] || computerMove == computerPlayer.gestures[4])
+                    {
+                        return "lose";
+                    }
+                    else
+                    {
+                        return "win";
+                    }
+                case "lizard":
+                    if (computerMove == computerPlayer.gestures[3])
+                    {
+                        return "tie";
+                    }
+                    else if (computerMove == computerPlayer.gestures[2] || computerMove == computerPlayer.gestures[1])
+                    {
+                        return "lose";
+                    }
+                    else
+                    {
+                        return "win";
+                    }
+                case "spock":
+                    if (computerMove == computerPlayer.gestures[4])
+                    {
+                        return "tie";
+                    }
+                    else if (computerMove == computerPlayer.gestures[1] || computerMove == computerPlayer.gestures[3])
+                    {
+                        return "lose";
+                    }
+                    else
+                    {
+                        return "win";
+                    }
+                default:
+                    return "null";
+            }
         }
 
     }
+
+}
 }
