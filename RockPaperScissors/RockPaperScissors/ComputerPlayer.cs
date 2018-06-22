@@ -62,7 +62,7 @@ namespace RockPaperScissors
                     switchCaseName = "Dylan";
                     return switchCaseName;
                 case 3:
-                    switchCaseName = "Ryan";
+                    switchCaseName = "Paxton";
                     return switchCaseName;
                 case 4:
                     switchCaseName = "Matt";
@@ -83,7 +83,7 @@ namespace RockPaperScissors
                     switchCaseName = "Dan";
                     return switchCaseName;
                 case 10:
-                    switchCaseName = "Paxton";
+                    switchCaseName = "Ryan";
                     return switchCaseName;
                 default:
                     return "default";

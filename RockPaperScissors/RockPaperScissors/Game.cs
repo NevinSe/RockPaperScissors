@@ -10,11 +10,12 @@ namespace RockPaperScissors
     {
         Player playerOne;
         Player playerTwo;
+        public string numberPlayers;
 
         public void MainGame()
         {
-            Console.WriteLine("Enter how many players: \r\n (1 player, 2 players)");
-            string numberPlayers = Console.ReadLine().Trim();
+            Console.WriteLine("Enter how many players: \r\n (Enter 1 for one player, enter 2 for two players, or enter 3 to run a bot game)");
+            numberPlayers = Console.ReadLine().Trim();
 
             switch (numberPlayers)
             {
@@ -38,7 +39,20 @@ namespace RockPaperScissors
                     playerTwo.twoPlayerGame = true;
                     RunGame();
                     break;
+                case "3":
+                    playerOne = new ComputerPlayer();
+                    Console.WriteLine(playerOne.name + ", will be the first bot. (press enter to continue)");
+                    Console.ReadLine();
+                    playerTwo = new ComputerPlayer();
+                    Console.WriteLine(playerTwo.name + ", will be the second bot. (press enter to continue)");
+                    Console.ReadLine();
+                    playerOne.twoPlayerGame = false;
+                    playerTwo.twoPlayerGame = false;
+                    RunGame();
+                    break;
                 default:
+                    Console.WriteLine("------Enter a valid Choice you cow-handed ninnymuggins------\r\n");
+                    MainGame();
                     break;
 
 
@@ -50,7 +64,18 @@ namespace RockPaperScissors
             do
             {
                 Console.WriteLine("\r\n" + playerOne.name + " score is: " + playerOne.score + " and " + playerTwo.name + " score is: " + playerTwo.score);
-                Scoreing(GameLogic(playerOne.GestureCheck(), playerTwo.GestureCheck()));
+                if (numberPlayers != "3")
+                {
+                    Scoreing(GameLogic(playerOne.GestureCheck(), playerTwo.GestureCheck()));
+                }
+                else
+                {
+                    string playerOneGesture = playerOne.GestureCheck();
+                    Console.WriteLine("\r\n----Press enter to pit computers against each other----");
+                    Console.ReadLine();
+                    string playerTwoGesture = playerTwo.GestureCheck();
+                    Scoreing(GameLogic(playerOneGesture, playerTwoGesture));
+                }
             }
             while (playerOne.score < 2 && playerTwo.score < 2);
             if (playerOne.score == 2)
@@ -61,34 +86,44 @@ namespace RockPaperScissors
             {
                 Console.WriteLine("\r\n" + playerTwo.name + " is the winner!\r\n" + "Scores: \r\n" + playerOne.name + ": " + playerOne.score + "\r\n" + playerTwo.name + ": " + playerTwo.score);
             }
-            bool playAgain = PlayAgain();
-            if (playAgain)
+            string playAgain = PlayAgain();
+            if (playAgain == "yes")
             {
                 playerTwo.score = 0;
                 playerOne.score = 0;
                 RunGame();
 
             }
-            else
+            else if (playAgain == "no")
             {
                 playerTwo.score = 0;
                 playerOne.score = 0;
                 MainGame();
             }
+            else if (playAgain == "quit")
+            {
+                Environment.Exit(0);
+            }
+            else
+                PlayAgain();
+
         }
 
-        public bool PlayAgain()
+        public string PlayAgain()
         {
-            Console.WriteLine("\r\nPlay Again?" + "\r\n" + "Enter: Yes, No");
+            Console.WriteLine("\r\nPlay Again?" + "\r\n" + "Enter: Yes, No, or quit");
             string playAgain = Console.ReadLine().ToLower().Trim();
             switch (playAgain)
             {
                 case "yes":
-                    return true;
+                    return "yes";
                 case "no":
-                    return false;
+                    return "no";
+                case "quit":
+                    return "quit";
                 default:
-                    return false;
+                    Console.WriteLine("\r\n----Why must you be diffcult?----\r\n");
+                    return "null";
             }
 
         }
@@ -109,7 +144,7 @@ namespace RockPaperScissors
                     playerTwo.IncreaseScore();
                     break;
                 default:
-                    Console.WriteLine("\r\n" + "What is the matter with you? Pick a valid choice \r\n");
+                    Console.WriteLine("\r\n" + "What is the matter with you? Pick a valid choice. \r\n");
                     break;
             }
         }
