@@ -11,7 +11,6 @@ namespace RockPaperScissors
         public string name;
         public int score;
         public string gesture;
-        public string userInput;
         public bool twoPlayerGame;
         public List<string> gestures = new List<string>
         {
@@ -28,7 +27,7 @@ namespace RockPaperScissors
         public virtual string GestureCheck()
         {
             Console.WriteLine(this.name + ", please enter your move: \r\n (Rock, Paper, Scissors, Lizard, Spock)");
-            userInput = Console.ReadLine();
+            string userInput = Console.ReadLine();
             if(twoPlayerGame == true)
             {
                 Console.Clear();

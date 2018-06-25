@@ -20,8 +20,8 @@ namespace RockPaperScissors
             switch (numberPlayers)
             {
                 case "1":
-                    playerOne = new HumanPlayer();
-                    playerTwo = new ComputerPlayer();
+                    playerOne = new Human();
+                    playerTwo = new Computer();
                     Console.WriteLine("Please Enter Your name: ");
                     playerOne.name = Console.ReadLine();
                     Console.WriteLine("Your opponite will be: " + playerTwo.name);
@@ -29,8 +29,8 @@ namespace RockPaperScissors
                     RunGame();
                     break;
                 case "2":
-                    playerOne = new HumanPlayer();
-                    playerTwo = new HumanPlayer();
+                    playerOne = new Human();
+                    playerTwo = new Human();
                     Console.WriteLine("Player One, please enter your name: ");
                     playerOne.name = Console.ReadLine();
                     Console.WriteLine("Player Two, please enter your name: ");
@@ -40,10 +40,10 @@ namespace RockPaperScissors
                     RunGame();
                     break;
                 case "3":
-                    playerOne = new ComputerPlayer();
+                    playerOne = new Computer();
                     Console.WriteLine(playerOne.name + ", will be the first bot. (press enter to continue)");
                     Console.ReadLine();
-                    playerTwo = new ComputerPlayer();
+                    playerTwo = new Computer();
                     Console.WriteLine(playerTwo.name + ", will be the second bot. (press enter to continue)");
                     Console.ReadLine();
                     playerOne.twoPlayerGame = false;
@@ -78,6 +78,13 @@ namespace RockPaperScissors
                 }
             }
             while (playerOne.score < 2 && playerTwo.score < 2);
+            DisplayWinner();
+            PlayAgain();
+            
+        }
+
+        public void DisplayWinner()
+        {
             if (playerOne.score == 2)
             {
                 Console.WriteLine("\r\n" + playerOne.name + " is the winner!\r\n" + "Scores: \r\n" + playerOne.name + ": " + playerOne.score + "\r\n" + playerTwo.name + ": " + playerTwo.score);
@@ -86,7 +93,10 @@ namespace RockPaperScissors
             {
                 Console.WriteLine("\r\n" + playerTwo.name + " is the winner!\r\n" + "Scores: \r\n" + playerOne.name + ": " + playerOne.score + "\r\n" + playerTwo.name + ": " + playerTwo.score);
             }
-            string playAgain = PlayAgain();
+        }
+         public void PlayAgain()
+        {
+            string playAgain = PlayAgainCheck();
             if (playAgain == "yes")
             {
                 playerTwo.score = 0;
@@ -105,11 +115,12 @@ namespace RockPaperScissors
                 Environment.Exit(0);
             }
             else
-                PlayAgain();
+                PlayAgainCheck();
+
 
         }
 
-        public string PlayAgain()
+        public string PlayAgainCheck()
         {
             Console.WriteLine("\r\nPlay Again?" + "\r\n" + "Enter: Yes, No, or quit");
             string playAgain = Console.ReadLine().ToLower().Trim();

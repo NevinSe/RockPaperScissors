@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 
 namespace RockPaperScissors
 {
-    public class HumanPlayer : Player
+    public class Human : Player
     {
 
 
-        public HumanPlayer()
+        public Human()
         {
             this.name = "TBD";
             this.score = 0;
         }
+
     }
 }

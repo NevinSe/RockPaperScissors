@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace RockPaperScissors
 {
-    class ComputerPlayer : Player
+    class Computer : Player
     {
 
-        public ComputerPlayer()
+        public Computer()
         {
             this.name = RandomComputerName();
             this.score = 0;
